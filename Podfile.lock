@@ -1,0 +1,16 @@
+PODS:
+  - CBFlashyTabBarController (0.8.0)
+
+DEPENDENCIES:
+  - CBFlashyTabBarController
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CBFlashyTabBarController
+
+SPEC CHECKSUMS:
+  CBFlashyTabBarController: 4a5373a5b586646f8c4c22b28a6d33d01328538e
+
+PODFILE CHECKSUM: 7de66f5eb2ad37f3ec706c3d79ce1a9b46d23765
+
+COCOAPODS: 1.5.3
