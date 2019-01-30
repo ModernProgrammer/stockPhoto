@@ -17,6 +17,15 @@ extension UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.isTranslucent = false
     }
+    
+    
+    func setupClearNavBar() {
+        navigationController?.navigationBar.tintColor =  UIColor.themeBlack
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.barTintColor = .clear
+        navigationController?.navigationBar.isTranslucent = true
+    }
 }
 
 extension UIView {
@@ -47,5 +56,16 @@ extension UIView {
         if height != 0 {
             self.heightAnchor.constraint(equalToConstant: height).isActive = true
         }
+    }
+    
+    func fadeIn(_ duration: TimeInterval = 0.3, delay: TimeInterval = 0.3, completion: @escaping ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseIn, animations: {
+            self.alpha = 1.0
+        }, completion: completion)  }
+    
+    func fadeOut(_ duration: TimeInterval = 0.3, delay: TimeInterval = 0.3, completion: @escaping (Bool) -> Void = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseIn, animations: {
+            self.alpha = 0.0
+        }, completion: completion)
     }
 }

@@ -21,16 +21,16 @@ class SavedViewController: UICollectionViewController, UICollectionViewDelegateF
     
     override func viewDidDisappear(_ animated: Bool) {
         self.collectionView.alpha = 1
-        UIView.animate(withDuration: 0.5, animations: {
-            self.collectionView.alpha = 0
-        })
+        self.collectionView.fadeOut(0.5, delay: 0) { (done) in
+            print("Done")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.collectionView.alpha = 0
-        UIView.animate(withDuration: 0.5, animations: {
-            self.collectionView.alpha = 1
-        })
+        self.collectionView.fadeIn(0.5, delay: 0) { (done) in
+            print("Done")
+        }
     }
 }
 
@@ -45,7 +45,8 @@ extension SavedViewController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.safeAreaLayoutGuide.layoutFrame.width/2
-        return CGSize(width: width, height: width)
+        let height = collectionView.safeAreaLayoutGuide.layoutFrame.height/3
+        return CGSize(width: width, height: height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

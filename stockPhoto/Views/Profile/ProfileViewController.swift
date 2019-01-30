@@ -8,28 +8,42 @@
 
 import UIKit
 
-class ProfileViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     let headerId = "headerId"
     let cellId = "cellId"
+    let photos = ["nomadElCaptan", "nomadGlacier", "nomadLostCoast", "nomadSanoma", "nomadTheSurf", "blueocean", "liberty", "mountain","snowy", "nomadElCaptan", "nomadGlacier", "nomadLostCoast", "nomadSanoma", "nomadTheSurf", "blueocean", "liberty", "mountain","snowy"]
+
+    
+    lazy var collectionView:  UICollectionView = {
+        let layout = StretchyHeaderLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.contentInsetAdjustmentBehavior = .never
+        return collectionView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupWhiteNavBar()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        setupClearNavBar()
         setupCollectionView()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         self.collectionView.alpha = 1
-        UIView.animate(withDuration: 0.5, animations: {
-            self.collectionView.alpha = 0
-        })
+        self.collectionView.fadeOut(0.5, delay: 0) { (done) in
+            print("Done")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.collectionView.alpha = 0
-        UIView.animate(withDuration: 0.5, animations: {
-            self.collectionView.alpha = 1
-        })
+        self.collectionView.fadeIn(0.5, delay: 0) { (done) in
+            print("Done")
+        }
     }
 }
 
@@ -38,18 +52,19 @@ extension ProfileViewController {
     fileprivate func setupCollectionView() {
         view.backgroundColor = .white
         collectionView.backgroundColor = .white
-        navigationItem.title = "Profile"
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        view.addSubview(collectionView)
+        collectionView.anchor(top: view.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let width = view.frame.width
-        let height = view.frame.height
-        return CGSize(width: width, height: height/3)
+        let height = view.frame.height/2
+        return CGSize(width: width, height: height)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! ProfileHeader
@@ -61,8 +76,8 @@ extension ProfileViewController {
     }
     
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -70,8 +85,9 @@ extension ProfileViewController {
         return CGSize(width: width, height: width)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ProfileCell
+        cell.imageView.image = UIImage(named: photos[indexPath.item])
         return cell
     }
     

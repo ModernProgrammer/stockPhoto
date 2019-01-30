@@ -20,20 +20,18 @@ class TabbarController: CBFlashyTabBarController {
 extension TabbarController {
     fileprivate func setupTabbarUI() {
         guard let homeImage = UIImage(named: "home") else { return }
-        guard let exploreImage = UIImage(named: "explore") else { return }
+        guard let lovedImage = UIImage(named: "loved") else { return }
         guard let profileImage = UIImage(named: "profile") else { return }
         
         let flowlayoutHome = UICollectionViewFlowLayout()
         let flowlayoutSaved = UICollectionViewFlowLayout()
-        let flowlayoutProfile = UICollectionViewFlowLayout()
-
         
         let homeViewController = HomeViewController(collectionViewLayout :flowlayoutHome)
         let savedViewController = SavedViewController(collectionViewLayout :flowlayoutSaved)
-        let profileViewController = ProfileViewController(collectionViewLayout :flowlayoutProfile)
+        let profileViewController = ProfileViewController()
         
         let homeNavViewController = templateNavbarTabbarView(title: "Home", image: homeImage, viewController: homeViewController)
-        let savedNavViewController = templateNavbarTabbarView(title: "Saved", image: exploreImage, viewController: savedViewController)
+        let savedNavViewController = templateNavbarTabbarView(title: "Saved", image: lovedImage, viewController: savedViewController)
         let profileNavViewController = templateNavbarTabbarView(title: "Profile", image: profileImage, viewController: profileViewController)
         
         let tabBarList = [homeNavViewController, savedNavViewController, profileNavViewController]
