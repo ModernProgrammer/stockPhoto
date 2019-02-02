@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileCell: UICollectionViewCell {
+class ImageCellNoPadding: UICollectionViewCell {
     let imageView : UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill

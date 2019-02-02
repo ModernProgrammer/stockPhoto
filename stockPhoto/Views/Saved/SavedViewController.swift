@@ -39,7 +39,7 @@ extension SavedViewController {
     fileprivate func setupCollectionViewUI() {
         view.backgroundColor = .white
         collectionView.backgroundColor = .white
-        collectionView.register(SavedCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(ImageCellPadding.self, forCellWithReuseIdentifier: cellId)
         navigationItem.title = "Saved"
     }
     
@@ -54,9 +54,14 @@ extension SavedViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavedCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ImageCellPadding
         cell.imageView.image = UIImage(named: photos[indexPath.item])
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let view = ImageViewController()
+        self.present(view, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

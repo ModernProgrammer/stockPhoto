@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SavedCell: UICollectionViewCell {
+class ImageCellPadding: UICollectionViewCell {
     let padding : CGFloat = 20
     let shadowPadding : CGFloat = 40
     

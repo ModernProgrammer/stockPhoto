@@ -22,7 +22,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         setupWhiteNavBar()
         setNavBarAttributes()
         setupMenuViewController()
-        view.backgroundColor = .white
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -88,6 +87,7 @@ extension HomeViewController {
 // MARK: UICollectionView Functions
 extension HomeViewController {
     fileprivate func setupCollectionView() {
+        view.backgroundColor = .white
         collectionView.backgroundColor = .white
         collectionView.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(HomeHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
@@ -124,6 +124,13 @@ extension HomeViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
         cell.imageView.image = UIImage(named: photos[indexPath.item])
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let galleryView = GalleryViewController()
+//        galleryView.modalTransitionStyle = .crossDissolve
+        let navGalleryView = UINavigationController(rootViewController: galleryView)
+        self.present(navGalleryView, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
