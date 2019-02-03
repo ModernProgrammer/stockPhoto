@@ -11,7 +11,15 @@ import UIKit
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
-    let photos = ["nomadElCaptan", "nomadGlacier", "nomadLostCoast", "nomadSanoma", "nomadTheSurf", "blueocean", "liberty", "mountain","snowy", "nomadElCaptan", "nomadGlacier", "nomadLostCoast", "nomadSanoma", "nomadTheSurf", "blueocean", "liberty", "mountain","snowy","nomadElCaptan", "nomadGlacier", "nomadLostCoast", "nomadSanoma", "nomadTheSurf", "blueocean"]
+    
+    var photos : [Image]?
+    var imageGallery : ImageGallery? {
+        didSet {
+            guard let imageGallery = self.imageGallery else { return }
+            photos = imageGallery.images
+            navigationItem.title = imageGallery.title
+        }
+    }
 
     lazy var collectionView:  UICollectionView = {
         let layout = StretchyHeaderLayout()
@@ -31,9 +39,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
 // MARK: UI Functions
 extension GalleryViewController {
     fileprivate func setupCollectionViewAttributes() {
-        let dismissIcon = UIImage(named: "dismiss")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: dismissIcon, style: .plain, target: self, action: #selector(handleDismiss))
-        navigationItem.title = "TITLE"
+        
         view.backgroundColor = .white
         collectionView.backgroundColor = .white
         collectionView.register(ImageCellNoPadding.self, forCellWithReuseIdentifier: cellId)
@@ -50,7 +56,8 @@ extension GalleryViewController {
 // MARK: UICollectionView Functions
 extension GalleryViewController {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        guard let count = photos?.count else { return 0 }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -60,13 +67,17 @@ extension GalleryViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ImageCellNoPadding
-        cell.imageView.image = UIImage(named: photos[indexPath.item])
+        guard let image =  photos?[indexPath.item].image else { return UICollectionViewCell()}
+        cell.imageView.image = UIImage(named: image)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let view = ImageViewController()
-        self.present(view, animated: true)
+        let imageView = ImageViewController()
+        let navImageView = UINavigationController(rootViewController: imageView)
+        guard let image = photos?[indexPath.item] else { return }
+        imageView.image = image
+        self.present(navImageView, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

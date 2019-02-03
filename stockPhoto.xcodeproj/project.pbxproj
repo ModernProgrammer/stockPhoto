@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		12AD43E9EA0B99B545B1A185 /* Pods_stockPhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3A4AB8D53318709547E6322 /* Pods_stockPhoto.framework */; };
+		B27B7936220798A9006D4605 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B7935220798A9006D4605 /* ImageController.swift */; };
 		B2B92FA021FE095B003DF656 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92F9F21FE095B003DF656 /* AppDelegate.swift */; };
 		B2B92FA221FE095B003DF656 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92FA121FE095B003DF656 /* TabbarController.swift */; };
 		B2B92FA521FE095B003DF656 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2B92FA321FE095B003DF656 /* Main.storyboard */; };
@@ -30,9 +31,13 @@
 		B2B92FDA22026BF1003DF656 /* StretchyHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92FD922026BF1003DF656 /* StretchyHeaderLayout.swift */; };
 		B2B92FDC2204F3C7003DF656 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92FDB2204F3C7003DF656 /* GalleryViewController.swift */; };
 		B2B92FDE2204FBF8003DF656 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92FDD2204FBF8003DF656 /* ImageViewController.swift */; };
+		B2B92FE02205E32D003DF656 /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92FDF2205E32D003DF656 /* ImageGallery.swift */; };
+		B2B92FE22205E337003DF656 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92FE12205E337003DF656 /* Image.swift */; };
+		B2B92FE42205E678003DF656 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B92FE32205E678003DF656 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B27B7935220798A9006D4605 /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
 		B2B92F9C21FE095B003DF656 /* stockPhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockPhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B92F9F21FE095B003DF656 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2B92FA121FE095B003DF656 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
@@ -57,6 +62,9 @@
 		B2B92FD922026BF1003DF656 /* StretchyHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderLayout.swift; sourceTree = "<group>"; };
 		B2B92FDB2204F3C7003DF656 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		B2B92FDD2204FBF8003DF656 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		B2B92FDF2205E32D003DF656 /* ImageGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
+		B2B92FE12205E337003DF656 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		B2B92FE32205E678003DF656 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		BAD0950DE257DCE50EF259BC /* Pods-stockPhoto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stockPhoto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-stockPhoto/Pods-stockPhoto.debug.xcconfig"; sourceTree = "<group>"; };
 		C067BBF75B2F918A94C1003A /* Pods-stockPhoto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stockPhoto.release.xcconfig"; path = "Pods/Target Support Files/Pods-stockPhoto/Pods-stockPhoto.release.xcconfig"; sourceTree = "<group>"; };
 		D3A4AB8D53318709547E6322 /* Pods_stockPhoto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stockPhoto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +134,8 @@
 			isa = PBXGroup;
 			children = (
 				B2B92FD5220256F2003DF656 /* ProfileStats.swift */,
+				B2B92FE12205E337003DF656 /* Image.swift */,
+				B2B92FDF2205E32D003DF656 /* ImageGallery.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -134,6 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				B2B92FD922026BF1003DF656 /* StretchyHeaderLayout.swift */,
+				B2B92FE32205E678003DF656 /* DataController.swift */,
+				B27B7935220798A9006D4605 /* ImageController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -314,15 +326,19 @@
 				B2B92FB621FE0A0C003DF656 /* HomeViewController.swift in Sources */,
 				B2B92FD6220256F2003DF656 /* ProfileStats.swift in Sources */,
 				B2B92FD221FE5774003DF656 /* ProfileHeader.swift in Sources */,
+				B2B92FE22205E337003DF656 /* Image.swift in Sources */,
 				B2B92FDA22026BF1003DF656 /* StretchyHeaderLayout.swift in Sources */,
 				B2B92FC421FE3E06003DF656 /* MenuViewController.swift in Sources */,
 				B2B92FA221FE095B003DF656 /* TabbarController.swift in Sources */,
 				B2B92FCA21FE43F5003DF656 /* ProfileViewController.swift in Sources */,
 				B2B92FD822025C3A003DF656 /* SearchViewController.swift in Sources */,
+				B27B7936220798A9006D4605 /* ImageController.swift in Sources */,
 				B2B92FBB21FE1511003DF656 /* UIColor+theme.swift in Sources */,
 				B2B92FBF21FE20B4003DF656 /* HomeHeaderCell.swift in Sources */,
 				B2B92FC721FE4309003DF656 /* SavedViewController.swift in Sources */,
 				B2B92FDC2204F3C7003DF656 /* GalleryViewController.swift in Sources */,
+				B2B92FE42205E678003DF656 /* DataController.swift in Sources */,
+				B2B92FE02205E32D003DF656 /* ImageGallery.swift in Sources */,
 				B2B92FDE2204FBF8003DF656 /* ImageViewController.swift in Sources */,
 				B2B92FA021FE095B003DF656 /* AppDelegate.swift in Sources */,
 				B2B92FD421FE577C003DF656 /* ImageCellNoPadding.swift in Sources */,

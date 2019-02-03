@@ -69,3 +69,14 @@ extension UIView {
         }, completion: completion)
     }
 }
+
+extension UIImage {
+    static let dismissIcon  = UIImage(named: "dismiss")
+    static let menuIcon     = UIImage(named: "menu")
+    static let exploreIcon  = UIImage(named: "explore")
+    static let lovedIcon    = UIImage(named: "loved")
+    static let homeIcon     = UIImage(named: "home")
+    static let profileIcon  = UIImage(named: "profile")
+    static let searchIcon   = UIImage(named: "search")
+    static let settingsIcon = UIImage(named: "settings")
+}

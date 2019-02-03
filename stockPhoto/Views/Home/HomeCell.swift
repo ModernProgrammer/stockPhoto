@@ -10,6 +10,17 @@ import UIKit
 
 class HomeCell: UICollectionViewCell {
     
+    var imageGallery : ImageGallery?  {
+        didSet {
+            guard let imageGallery = imageGallery else { return }
+            imageView.image = UIImage(named: imageGallery.coverImage)
+            let attributedText = NSMutableAttributedString(string: "\(imageGallery.title) |  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 24), NSAttributedString.Key.foregroundColor : UIColor.themeBlack])
+            let count = "\(imageGallery.images.count) Photos"
+            attributedText.append(NSMutableAttributedString(string: count, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor : UIColor.themeGray]))
+            labelText.attributedText = attributedText
+        }
+    }
+    
     let container : UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -20,6 +31,13 @@ class HomeCell: UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .white
         return view
+    }()
+    
+    var labelText : UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        return label
     }()
     
     let imageView : UIImageView = {
@@ -53,6 +71,9 @@ class HomeCell: UICollectionViewCell {
         
         imageView.addSubview(textContainer)
         textContainer.anchor(top: nil, bottom: container.bottomAnchor, leading: container.leadingAnchor, trailing: container.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 100)
+        
+        textContainer.addSubview(labelText)
+        labelText.anchor(top: textContainer.topAnchor, bottom: textContainer.bottomAnchor, leading: textContainer.leadingAnchor, trailing: textContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -13,19 +13,14 @@ class StretchyHeaderLayout: UICollectionViewFlowLayout {
         let layoutAttributes = super.layoutAttributesForElements(in: rect)
         layoutAttributes?.forEach({ (attributes) in
             if attributes.representedElementKind == UICollectionView.elementKindSectionHeader {
-                
-                
                 guard let width = collectionView?.frame.width else { return }
                 guard let contentOffsetY: CGFloat = collectionView?.contentOffset.y else { return }
                 
                 if contentOffsetY > 0 {
-                    return 
+                    return
                 }
                 
-                
                 let height = attributes.frame.height - contentOffsetY
-                
-                
                 attributes.frame = CGRect(x: 0, y: contentOffsetY, width: width, height: height)
             }
         })

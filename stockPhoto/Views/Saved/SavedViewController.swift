@@ -10,24 +10,13 @@ import UIKit
 
 class SavedViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
-    let photos = ["nomadElCaptan", "nomadGlacier", "nomadLostCoast", "nomadSanoma", "nomadTheSurf", "blueocean", "liberty", "margaret", "mountain","snowy"]
+    var photos : [Image] = DataController.shared.images
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.collectionView.alpha = 0
         setupWhiteNavBar()
         setupCollectionViewUI()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        self.collectionView.alpha = 1
-        self.collectionView.fadeOut(0.5, delay: 0) { (done) in
-            print("Done")
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.collectionView.alpha = 0
         self.collectionView.fadeIn(0.5, delay: 0) { (done) in
             print("Done")
         }
@@ -55,13 +44,16 @@ extension SavedViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ImageCellPadding
-        cell.imageView.image = UIImage(named: photos[indexPath.item])
+        cell.imageView.image = UIImage(named: photos[indexPath.item].image)
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let view = ImageViewController()
-        self.present(view, animated: true)
+        let imageView = ImageViewController()
+        let image = photos[indexPath.item]
+        imageView.image = image
+        let navImageView = UINavigationController(rootViewController: imageView)
+        self.present(navImageView, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -13,16 +13,14 @@ class TabbarController: CBFlashyTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabbarUI()
+        let imageController = DataController.shared
+        imageController.setupImageGalleryData()
     }
 }
 
 // MARK: tabbar Functions
 extension TabbarController {
     fileprivate func setupTabbarUI() {
-        guard let homeImage = UIImage(named: "home") else { return }
-        guard let lovedImage = UIImage(named: "loved") else { return }
-        guard let profileImage = UIImage(named: "profile") else { return }
-        
         let flowlayoutHome = UICollectionViewFlowLayout()
         let flowlayoutSaved = UICollectionViewFlowLayout()
         
@@ -30,9 +28,9 @@ extension TabbarController {
         let savedViewController = SavedViewController(collectionViewLayout :flowlayoutSaved)
         let profileViewController = ProfileViewController()
         
-        let homeNavViewController = templateNavbarTabbarView(title: "Home", image: homeImage, viewController: homeViewController)
-        let savedNavViewController = templateNavbarTabbarView(title: "Saved", image: lovedImage, viewController: savedViewController)
-        let profileNavViewController = templateNavbarTabbarView(title: "Profile", image: profileImage, viewController: profileViewController)
+        let homeNavViewController = templateNavbarTabbarView(title: "Home", image: UIImage.homeIcon!, viewController: homeViewController)
+        let savedNavViewController = templateNavbarTabbarView(title: "Saved", image: UIImage.lovedIcon!, viewController: savedViewController)
+        let profileNavViewController = templateNavbarTabbarView(title: "Profile", image: UIImage.profileIcon!, viewController: profileViewController)
         
         let tabBarList = [homeNavViewController, savedNavViewController, profileNavViewController]
         tabBar.tintColor = .themeBlack

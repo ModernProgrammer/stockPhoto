@@ -11,41 +11,34 @@ import UIKit
 class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
     let headerId = "headerId"
-    let photos = ["nomadElCaptan", "nomadGlacier", "nomadLostCoast", "nomadSanoma", "nomadTheSurf"]
+    var imageGallery : [ImageGallery]?
     let menuWidth: CGFloat = 200
     let menuView = MenuViewController()
-    var isMenuOpen: Bool = false
+    let imageController = DataController.shared
+    var isMenuOpened: Bool = false
+    let velocityThreshold: CGFloat = 500
+    let darkCoverView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageGallery = imageController.imageGallery
+        self.collectionView.alpha = 0
         setupCollectionView()
         setupWhiteNavBar()
         setNavBarAttributes()
         setupMenuViewController()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        self.collectionView.alpha = 1
-        self.collectionView.fadeOut(0.5, delay: 0) { (done) in
-            print("Done")
-        }
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        self.collectionView.alpha = 0
+        setupDarkCoverView()
         self.collectionView.fadeIn(0.5, delay: 0) { (done) in
             print("Done")
         }
-
     }
 }
 
 // MARK: UI Functions
 extension HomeViewController {
     fileprivate func setNavBarAttributes() {
-        let menuIcon = UIImage(named: "menu")
-        let searchIcon = UIImage(named: "search")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: menuIcon, style: .plain, target: self, action: #selector(handleMenu))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: searchIcon, style: .plain, target: self, action: #selector(handleSearch))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage.menuIcon!, style: .plain, target: self, action: #selector(handleMenu))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage.searchIcon!, style: .plain, target: self, action: #selector(handleSearch))
     }
     
     @objc fileprivate func handleSearch() {
@@ -58,15 +51,14 @@ extension HomeViewController {
     @objc fileprivate func handleMenu() {
         print("Menu Press")
         // show menu view
-        if isMenuOpen {
+        if isMenuOpened {
             performAnimations(transform: .identity)
-            isMenuOpen = false
+            isMenuOpened = false
         } else {
             performAnimations(transform: CGAffineTransform(translationX: self.menuWidth, y: 0))
-            isMenuOpen = true
+            isMenuOpened = true
         }
     }
-    
     
     func setupMenuViewController() {
         let keyWindow = UIApplication.shared.keyWindow
@@ -76,11 +68,79 @@ extension HomeViewController {
         addChild(menuView)
     }
     
+
+    
+    fileprivate func setupPanGesture() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        view.addGestureRecognizer(panGesture)
+    }
+    
+    @objc func handlePan(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        if gesture.state == .changed {
+            var x = translation.x
+            if isMenuOpened {
+                x += menuWidth
+            }
+            x = min(view.frame.maxX, x)
+            x = max(menuWidth, x)
+            let transform = CGAffineTransform(translationX: x, y: 0)
+            menuView.view.transform = transform
+        } else if gesture.state == .ended {
+            handleEnded(gesture: gesture)
+        }
+    }
+    
+    @objc func handleOpenMenu() {
+        isMenuOpened = true
+        performAnimations(transform: CGAffineTransform(translationX: self.menuWidth, y: 0))
+    }
+    
+    func handleCloseMenu() {
+        isMenuOpened = false
+        performAnimations(transform: .identity)
+    }
+    
+    func handleEnded(gesture: UIPanGestureRecognizer){
+        let translation = gesture.translation(in: view)
+        let velocity = gesture.velocity(in: view)
+        if isMenuOpened {
+            if  velocity.x > velocityThreshold {
+                handleCloseMenu()
+                return
+            }
+            if translation.x < abs(menuWidth/2) {
+                handleOpenMenu()
+            } else {
+                handleCloseMenu()
+            }
+        } else {
+            if abs(velocity.x) > velocityThreshold {
+                handleOpenMenu()
+                return
+            }
+            if translation.x >  -(menuWidth/2) {
+                handleCloseMenu()
+            } else {
+                handleOpenMenu()
+            }
+        }
+    }
+    
     func performAnimations(transform: CGAffineTransform) {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.navigationController?.view.transform = transform // Set if you want to move the entire view with menu
             self.menuView.view.transform = transform
         })
+    }
+    
+    func setupDarkCoverView() {
+        darkCoverView.alpha = 0
+        darkCoverView.backgroundColor = UIColor(white: 0, alpha: 0.8)
+        darkCoverView.isUserInteractionEnabled = false
+        let mainWindow = UIApplication.shared.keyWindow
+        mainWindow?.addSubview(darkCoverView)
+        darkCoverView.frame = mainWindow?.frame ?? .zero
     }
 }
 
@@ -111,7 +171,7 @@ extension HomeViewController {
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return (imageGallery?.count)!
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -122,15 +182,14 @@ extension HomeViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
-        cell.imageView.image = UIImage(named: photos[indexPath.item])
+        cell.imageGallery = imageGallery![indexPath.item]
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let galleryView = GalleryViewController()
-//        galleryView.modalTransitionStyle = .crossDissolve
-        let navGalleryView = UINavigationController(rootViewController: galleryView)
-        self.present(navGalleryView, animated: true)
+        galleryView.imageGallery = imageGallery![indexPath.item]
+        self.navigationController?.pushViewController(galleryView, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

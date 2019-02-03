@@ -21,6 +21,7 @@ class ProfileHeader: UICollectionViewCell {
             posts = stat.posts
             followers = stat.followers
             following = stat.following
+            setStats()
         }
     }
     

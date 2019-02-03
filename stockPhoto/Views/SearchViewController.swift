@@ -9,7 +9,7 @@
 import UIKit
 
 class SearchViewController: UIViewController, UITextFieldDelegate {
-    
+    var stackView = UIStackView()
     var searchBar : UITextField = {
         let textSize:CGFloat = 36
         let textField = UITextField()
@@ -39,6 +39,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         setupUIView()
         setupKeyboardDismissal()
         setupWhiteNavBar()
+        self.stackView.fadeIn(0.5, delay: 0) { (done) in
+            print("Done")
+        }
     }
 }
 
@@ -94,7 +97,8 @@ extension SearchViewController {
         view.backgroundColor = .white
         let panGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(panGesture)
-        let stackView = UIStackView(arrangedSubviews: [searchBar,button])
+        stackView = UIStackView(arrangedSubviews: [searchBar,button])
+        stackView.alpha = 0
         stackView.axis = .vertical
         stackView.distribution = .fill
         view.addSubview(stackView)
