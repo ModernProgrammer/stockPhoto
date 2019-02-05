@@ -1,20 +1,13 @@
 # stockPhoto
 ![alt text](https://s3.amazonaws.com/diegophotos/github/StockPhoto_1.png)
 
-
-# Project Title
-
-Stock Photo
-
-
-![alt text](https://s3.amazonaws.com/diegophotos/github/StockPhoto_2.png)
-
 ## Description
 
 I decided to practice my UI/UX design by creating this iOS App. It was built primarily for aesthetics. The UI was built programmatically using Swift.
 
 Enjoy.
 
+![alt text](https://s3.amazonaws.com/diegophotos/github/StockPhoto_2.png)
 
 ## Built With
 
