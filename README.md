@@ -25,7 +25,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Authors
 
-* **Diego E Bustamante** - *Initial work* - [StockPhoto](https://github.com/stockPhoto)
+* **Diego E Bustamante** -  [Github](https://github.com/ModernProgrammer)
 
 
 ## License
